@@ -30,8 +30,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
-    user = SlugRelatedField(slug_field='username', queryset=User.objects.all(), default=serializers.CurrentUserDefault())
-    following = SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    user = SlugRelatedField(
+        slug_field='username', queryset=User.objects.all(),
+        default=serializers.CurrentUserDefault()
+    )
+
+    following = SlugRelatedField(
+        slug_field='username', queryset=User.objects.all()
+    )
 
     class Meta:
         fields = '__all__'
@@ -47,4 +53,4 @@ class FollowSerializer(serializers.ModelSerializer):
         if data['user'] == data['following']:
             raise serializers.ValidationError(
                 'Имя не может совпадать с именем автора!')
-        return data 
+        return data
